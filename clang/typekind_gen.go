@@ -108,6 +108,8 @@ const (
 	Type_DependentSizedArray = C.CXType_DependentSizedArray
 	// A type whose specific kind is not exposed via this interface.
 	Type_MemberPointer = C.CXType_MemberPointer
+	// A type whose specific kind is not exposed via this interface.
+	Type_Auto = C.CXType_Auto
 )
 
 // Retrieve the spelling of a given CXTypeKind.

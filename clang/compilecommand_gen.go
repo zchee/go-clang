@@ -17,9 +17,17 @@ func (cc CompileCommand) Directory() string {
 	return o.String()
 }
 
+// Get the filename associated with the CompileCommand.
+func (cc CompileCommand) Filename() string {
+	o := cxstring{C.clang_CompileCommand_getFilename(cc.c)}
+	defer o.Dispose()
+
+	return o.String()
+}
+
 // Get the number of arguments in the compiler invocation.
-func (cc CompileCommand) NumArgs() uint16 {
-	return uint16(C.clang_CompileCommand_getNumArgs(cc.c))
+func (cc CompileCommand) NumArgs() uint32 {
+	return uint32(C.clang_CompileCommand_getNumArgs(cc.c))
 }
 
 /*
@@ -28,7 +36,7 @@ func (cc CompileCommand) NumArgs() uint16 {
 	Invariant :
 	- argument 0 is the compiler executable
 */
-func (cc CompileCommand) Arg(i uint16) string {
+func (cc CompileCommand) Arg(i uint32) string {
 	o := cxstring{C.clang_CompileCommand_getArg(cc.c, C.uint(i))}
 	defer o.Dispose()
 

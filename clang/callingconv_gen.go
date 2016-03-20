@@ -21,6 +21,9 @@ const (
 	CallingConv_X86_64Win64               = C.CXCallingConv_X86_64Win64
 	CallingConv_X86_64SysV                = C.CXCallingConv_X86_64SysV
 	CallingConv_X86VectorCall             = C.CXCallingConv_X86VectorCall
+	CallingConv_Swift                     = C.CXCallingConv_Swift
+	CallingConv_PreserveMost              = C.CXCallingConv_PreserveMost
+	CallingConv_PreserveAll               = C.CXCallingConv_PreserveAll
 	CallingConv_Invalid                   = C.CXCallingConv_Invalid
 	CallingConv_Unexposed                 = C.CXCallingConv_Unexposed
 )
@@ -51,6 +54,12 @@ func (cc CallingConv) Spelling() string {
 		return "CallingConv=X86_64SysV"
 	case CallingConv_X86VectorCall:
 		return "CallingConv=X86VectorCall"
+	case CallingConv_Swift:
+		return "CallingConv=Swift"
+	case CallingConv_PreserveMost:
+		return "CallingConv=PreserveMost"
+	case CallingConv_PreserveAll:
+		return "CallingConv=PreserveAll"
 	case CallingConv_Invalid:
 		return "CallingConv=Invalid"
 	case CallingConv_Unexposed:

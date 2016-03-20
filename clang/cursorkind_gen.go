@@ -54,7 +54,7 @@ const (
 	Cursor_ObjCImplementationDecl = C.CXCursor_ObjCImplementationDecl
 	// An Objective-C \@implementation for a category.
 	Cursor_ObjCCategoryImplDecl = C.CXCursor_ObjCCategoryImplDecl
-	// A typedef
+	// A typedef.
 	Cursor_TypedefDecl = C.CXCursor_TypedefDecl
 	// A C++ class method.
 	Cursor_CXXMethod = C.CXCursor_CXXMethod
@@ -376,9 +376,11 @@ const (
 	Cursor_ObjCBoolLiteralExpr = C.CXCursor_ObjCBoolLiteralExpr
 	// Represents the "self" expression in an Objective-C method.
 	Cursor_ObjCSelfExpr = C.CXCursor_ObjCSelfExpr
-	// Represents the "self" expression in an Objective-C method.
+	// OpenMP 4.0 [2.4, Array Section].
+	Cursor_OMPArraySectionExpr = C.CXCursor_OMPArraySectionExpr
+	// OpenMP 4.0 [2.4, Array Section].
 	Cursor_LastExpr = C.CXCursor_LastExpr
-	// Represents the "self" expression in an Objective-C method.
+	// OpenMP 4.0 [2.4, Array Section].
 	Cursor_FirstStmt = C.CXCursor_FirstStmt
 	/*
 		A statement whose specific kind is not exposed via this
@@ -523,7 +525,23 @@ const (
 	Cursor_OMPCancellationPointDirective = C.CXCursor_OMPCancellationPointDirective
 	// OpenMP cancel directive.
 	Cursor_OMPCancelDirective = C.CXCursor_OMPCancelDirective
-	// OpenMP cancel directive.
+	// OpenMP target data directive.
+	Cursor_OMPTargetDataDirective = C.CXCursor_OMPTargetDataDirective
+	// OpenMP taskloop directive.
+	Cursor_OMPTaskLoopDirective = C.CXCursor_OMPTaskLoopDirective
+	// OpenMP taskloop simd directive.
+	Cursor_OMPTaskLoopSimdDirective = C.CXCursor_OMPTaskLoopSimdDirective
+	// OpenMP distribute directive.
+	Cursor_OMPDistributeDirective = C.CXCursor_OMPDistributeDirective
+	// OpenMP target enter data directive.
+	Cursor_OMPTargetEnterDataDirective = C.CXCursor_OMPTargetEnterDataDirective
+	// OpenMP target exit data directive.
+	Cursor_OMPTargetExitDataDirective = C.CXCursor_OMPTargetExitDataDirective
+	// OpenMP target parallel directive.
+	Cursor_OMPTargetParallelDirective = C.CXCursor_OMPTargetParallelDirective
+	// OpenMP target parallel for directive.
+	Cursor_OMPTargetParallelForDirective = C.CXCursor_OMPTargetParallelForDirective
+	// OpenMP target parallel for directive.
 	Cursor_LastStmt = C.CXCursor_LastStmt
 	/*
 		Cursor that represents the translation unit itself.
@@ -574,6 +592,12 @@ const (
 	// An attribute whose specific kind is not exposed via this interface.
 	Cursor_CUDASharedAttr = C.CXCursor_CUDASharedAttr
 	// An attribute whose specific kind is not exposed via this interface.
+	Cursor_VisibilityAttr = C.CXCursor_VisibilityAttr
+	// An attribute whose specific kind is not exposed via this interface.
+	Cursor_DLLExport = C.CXCursor_DLLExport
+	// An attribute whose specific kind is not exposed via this interface.
+	Cursor_DLLImport = C.CXCursor_DLLImport
+	// An attribute whose specific kind is not exposed via this interface.
 	Cursor_LastAttr = C.CXCursor_LastAttr
 	// An attribute whose specific kind is not exposed via this interface.
 	Cursor_PreprocessingDirective = C.CXCursor_PreprocessingDirective
@@ -591,6 +615,8 @@ const (
 	Cursor_LastPreprocessing = C.CXCursor_LastPreprocessing
 	// A module import declaration.
 	Cursor_ModuleImportDecl = C.CXCursor_ModuleImportDecl
+	// A module import declaration.
+	Cursor_TypeAliasTemplateDecl = C.CXCursor_TypeAliasTemplateDecl
 	// A module import declaration.
 	Cursor_FirstExtraDecl = C.CXCursor_FirstExtraDecl
 	// A module import declaration.

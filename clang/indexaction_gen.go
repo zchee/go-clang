@@ -45,7 +45,7 @@ func (ia IndexAction) Dispose() {
 
 	The rest of the parameters are the same as #clang_parseTranslationUnit.
 */
-func (ia IndexAction) IndexSourceFile(clientData ClientData, indexCallbacks *IndexerCallbacks, indexCallbacksSize uint16, indexOptions uint16, sourceFilename string, commandLineArgs []string, unsavedFiles []UnsavedFile, outTU *TranslationUnit, tUOptions uint16) int16 {
+func (ia IndexAction) IndexSourceFile(clientData ClientData, indexCallbacks *IndexerCallbacks, indexCallbacksSize uint32, indexOptions uint32, sourceFilename string, commandLineArgs []string, unsavedFiles []UnsavedFile, outTU *TranslationUnit, tUOptions uint32) int32 {
 	ca_commandLineArgs := make([]*C.char, len(commandLineArgs))
 	var cp_commandLineArgs **C.char
 	if len(commandLineArgs) > 0 {
@@ -68,7 +68,34 @@ func (ia IndexAction) IndexSourceFile(clientData ClientData, indexCallbacks *Ind
 	c_sourceFilename := C.CString(sourceFilename)
 	defer C.free(unsafe.Pointer(c_sourceFilename))
 
-	return int16(C.clang_indexSourceFile(ia.c, clientData.c, &indexCallbacks.c, C.uint(indexCallbacksSize), C.uint(indexOptions), c_sourceFilename, cp_commandLineArgs, C.int(len(commandLineArgs)), cp_unsavedFiles, C.uint(len(unsavedFiles)), &outTU.c, C.uint(tUOptions)))
+	return int32(C.clang_indexSourceFile(ia.c, clientData.c, &indexCallbacks.c, C.uint(indexCallbacksSize), C.uint(indexOptions), c_sourceFilename, cp_commandLineArgs, C.int(len(commandLineArgs)), cp_unsavedFiles, C.uint(len(unsavedFiles)), &outTU.c, C.uint(tUOptions)))
+}
+
+// Same as clang_indexSourceFile but requires a full command line for command_line_args including argv[0]. This is useful if the standard library paths are relative to the binary.
+func (ia IndexAction) IndexSourceFileFullArgv(clientData ClientData, indexCallbacks *IndexerCallbacks, indexCallbacksSize uint32, indexOptions uint32, sourceFilename string, commandLineArgs []string, unsavedFiles []UnsavedFile, outTU *TranslationUnit, tUOptions uint32) int32 {
+	ca_commandLineArgs := make([]*C.char, len(commandLineArgs))
+	var cp_commandLineArgs **C.char
+	if len(commandLineArgs) > 0 {
+		cp_commandLineArgs = &ca_commandLineArgs[0]
+	}
+	for i := range commandLineArgs {
+		ci_str := C.CString(commandLineArgs[i])
+		defer C.free(unsafe.Pointer(ci_str))
+		ca_commandLineArgs[i] = ci_str
+	}
+	ca_unsavedFiles := make([]C.struct_CXUnsavedFile, len(unsavedFiles))
+	var cp_unsavedFiles *C.struct_CXUnsavedFile
+	if len(unsavedFiles) > 0 {
+		cp_unsavedFiles = &ca_unsavedFiles[0]
+	}
+	for i := range unsavedFiles {
+		ca_unsavedFiles[i] = unsavedFiles[i].c
+	}
+
+	c_sourceFilename := C.CString(sourceFilename)
+	defer C.free(unsafe.Pointer(c_sourceFilename))
+
+	return int32(C.clang_indexSourceFileFullArgv(ia.c, clientData.c, &indexCallbacks.c, C.uint(indexCallbacksSize), C.uint(indexOptions), c_sourceFilename, cp_commandLineArgs, C.int(len(commandLineArgs)), cp_unsavedFiles, C.uint(len(unsavedFiles)), &outTU.c, C.uint(tUOptions)))
 }
 
 /*
@@ -87,6 +114,6 @@ func (ia IndexAction) IndexSourceFile(clientData ClientData, indexCallbacks *Ind
 	Returns If there is a failure from which there is no recovery, returns
 	non-zero, otherwise returns 0.
 */
-func (ia IndexAction) IndexTranslationUnit(clientData ClientData, indexCallbacks *IndexerCallbacks, indexCallbacksSize uint16, indexOptions uint16, tu TranslationUnit) int16 {
-	return int16(C.clang_indexTranslationUnit(ia.c, clientData.c, &indexCallbacks.c, C.uint(indexCallbacksSize), C.uint(indexOptions), tu.c))
+func (ia IndexAction) IndexTranslationUnit(clientData ClientData, indexCallbacks *IndexerCallbacks, indexCallbacksSize uint32, indexOptions uint32, tu TranslationUnit) int32 {
+	return int32(C.clang_indexTranslationUnit(ia.c, clientData.c, &indexCallbacks.c, C.uint(indexCallbacksSize), C.uint(indexOptions), tu.c))
 }

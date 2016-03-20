@@ -1,5 +1,3 @@
-#include <stdint.h>
-
 /*===-- clang-c/CXCompilationDatabase.h - Compilation database  ---*- C -*-===*\
 |*                                                                            *|
 |*                     The LLVM Compiler Infrastructure                       *|
@@ -126,6 +124,12 @@ clang_CompileCommands_getCommand(CXCompileCommands, unsigned I);
  */
 CINDEX_LINKAGE CXString
 clang_CompileCommand_getDirectory(CXCompileCommand);
+
+/**
+ * \brief Get the filename associated with the CompileCommand.
+ */
+CINDEX_LINKAGE CXString
+clang_CompileCommand_getFilename(CXCompileCommand);
 
 /**
  * \brief Get the number of arguments in the compiler invocation.
